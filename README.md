@@ -342,3 +342,13 @@ ORDER BY 
  ```
  `output`:
  ![image](https://user-images.githubusercontent.com/54851225/232664993-7c294363-b743-40f4-86f2-0d0279e23a0b.png)
+ 
+ ## DBMS USED
+ PostgreSQL 14
+ ## USAGE
+ 1. Download this repository.
+ 2. Install PostgreSQL 14.
+ 3. Create your own setting on postgreSQL 14 (root password, connection, etc.). Use this [article[(https://www.postgresqltutorial.com/postgresql-getting-started/install-postgresql/) for reference.
+ 4. Run `backup.sql` in folder `Backup`.
+ 
+ Now you are free to play with `SELECT` queries. 
