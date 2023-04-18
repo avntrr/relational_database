@@ -348,7 +348,7 @@ ORDER BY 
  ## USAGE
  1. Download this repository.
  2. Install PostgreSQL 14.
- 3. Create your own setting on postgreSQL 14 (root password, connection, etc.). Use this [article[(https://www.postgresqltutorial.com/postgresql-getting-started/install-postgresql/) for reference.
+ 3. Create your own setting on postgreSQL 14 (root password, connection, etc.). Use this [article](https://www.postgresqltutorial.com/postgresql-getting-started/install-postgresql/) for reference.
  4. Run `backup.sql` in folder `Backup`.
  
  Now you are free to play with `SELECT` queries. 
