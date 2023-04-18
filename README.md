@@ -245,3 +245,100 @@ ORDER BY
  ```
  `output`:
  ![image](https://user-images.githubusercontent.com/54851225/232663379-722fd9f5-47c0-4033-ba12-57e1e674e99c.png)
+ 
+ ## 3. ANALYTICAL QUERY
+ __3.1. Popularity of car models based on the number of bids.__
+ ```sql
+ SELECT a.model, count(a.model) AS count_product, COUNT(b.bid_id) AS count_bid
+FROM car_product a
+LEFT JOIN bid b
+ON
+a.product_id = b.product_id
+GROUP BY a.model
+ORDER BY count_bid DESC
+```
+`output`:
+![image](https://user-images.githubusercontent.com/54851225/232664260-3d248016-cc4d-4e9d-b8d4-1f1706dab5ea.png)
+
+__3.2. Compared car prices based on the average price per city.__
+```sql
+SELECT a.nama_kota, b.brand, b.model, b.year, CAST(AVG(b.price) AS INTEGER) AS avg_car_city
+FROM city a
+JOIN car_product b
+ON a.kota_id = b.kota_id
+GROUP  BY a.nama_kota, b.brand, b.model, b.year
+LIMIT 5
+```
+`output`:
+![image](https://user-images.githubusercontent.com/54851225/232664426-2f455a5e-7b38-4462-ba95-c7792dd9781e.png)
+
+__3.3. From the bids on a particular car model, find the comparison between the date the user placed a bid and the next bid along with the offered price.__
+```sql
+SELECT
+ p.model,
+ a.buyer_id,
+ MIN(a.bid_date) AS first_bid_date,
+ MIN(b.bid_date) AS next_bid_date,
+ a.bid_price AS first_bid_price,
+ b.bid_price AS next_bid_price
+FROM 
+ bid a
+ INNER JOIN bid b ON a.buyer_id = b.buyer_id AND a.product_id = b.product_id AND a.bid_id < b.bid_id
+ INNER JOIN car_product p ON a.product_id = p.product_id
+WHERE p.model LIKE '%Ertiga%'
+GROUP BY
+ p.model,
+ a.buyer_id,
+ a.bid_price,
+ b.bid_price
+ORDER BY 
+ a.buyer_id
+ ```
+ 
+`output`:
+![image](https://user-images.githubusercontent.com/54851225/232664639-3bb0500b-f316-4b62-8594-bc1dced714fe.png)
+
+__3.4. Compared the percentage difference between the average price of cars based on their model and the average bid price offered by customers in the last 6 months__
+```sql
+SELECT 
+ model,
+ CAST(AVG(price) AS INTEGER) AS avg_price,
+ CAST(AVG(CASE WHEN date_post >= DATE_TRUNC('month', CURRENT_DATE - INTERVAL '6 months') THEN price END) AS INTEGER) AS avg_price_6month,
+ CAST((AVG(price) - AVG(CASE WHEN date_post >= DATE_TRUNC('month', CURRENT_DATE - INTERVAL '6 months') THEN price END)) AS INTEGER) AS difference,
+ CAST((AVG(price) - AVG(CASE WHEN date_post >= DATE_TRUNC('month', CURRENT_DATE - INTERVAL '6 months') THEN price END)) AS INTEGER)/AVG(price)*100 AS difference_percent
+FROM 
+ car_product 
+GROUP BY 
+ model
+ ```
+ `output`:
+ ![image](https://user-images.githubusercontent.com/54851225/232664797-4f0fb578-9960-40f6-b35d-fad22cd20022.png)
+
+__3.5. Create a window function for the average bid price of a brand and model of car for the last 6 months.__
+```sql
+WITH max_date AS (
+ SELECT MAX(date_post) AS last_date_post
+ FROM car_product
+)
+SELECT 
+ brand,
+ model,
+ CAST(AVG(CASE WHEN DATE_TRUNC('month', date_post) = DATE_TRUNC('month', (SELECT last_date_post FROM max_date) - INTERVAL '6 months') THEN price END) AS INTEGER) AS avg_price_month6,
+ CAST(AVG(CASE WHEN DATE_TRUNC('month', date_post) = DATE_TRUNC('month', (SELECT last_date_post FROM max_date) - INTERVAL '5 months') THEN price END) AS INTEGER) AS avg_price_month5,
+ CAST(AVG(CASE WHEN DATE_TRUNC('month', date_post) = DATE_TRUNC('month', (SELECT last_date_post FROM max_date) - INTERVAL '4 months') THEN price END) AS INTEGER) AS avg_price_month4,
+ CAST(AVG(CASE WHEN DATE_TRUNC('month', date_post) = DATE_TRUNC('month', (SELECT last_date_post FROM max_date) - INTERVAL '3 months') THEN price END) AS INTEGER) AS avg_price_month3,
+ CAST(AVG(CASE WHEN DATE_TRUNC('month', date_post) = DATE_TRUNC('month', (SELECT last_date_post FROM max_date) - INTERVAL '2 months') THEN price END) AS INTEGER) AS avg_price_month2,
+ CAST(AVG(CASE WHEN DATE_TRUNC('month', date_post) = DATE_TRUNC('month', (SELECT last_date_post FROM max_date) - INTERVAL '1 months') THEN price END) AS INTEGER) AS avg_price_month1
+FROM 
+ car_product
+WHERE
+ model LIKE '%Yaris%'
+GROUP BY 
+ brand,
+ model
+ORDER BY 
+ brand, 
+ model
+ ```
+ `output`:
+ ![image](https://user-images.githubusercontent.com/54851225/232664993-7c294363-b743-40f4-86f2-0d0279e23a0b.png)
