@@ -51,5 +51,5 @@ for i in range(450):
 
     new_data = {'product_id':max(df_car_product['product_id'])+1, 'brand':random_brand, 'model':random_model, 'body_type':random_body_type, 'year':random_year, 'price':random_price}
 
-    df_car_product = df_car_product.append(new_data, ignore_index=True)```
+    df_car_product = df_car_product.append(new_data, ignore_index=True)
 
