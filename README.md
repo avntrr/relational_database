@@ -184,11 +184,64 @@ df_buyer.to_sql('buyer', engine, if_exists='replace', index=False)
 df_seller.to_sql('seller', engine, if_exists='replace', index=False)
 df_bid.to_sql('bid', engine, if_exists='replace', index=False)
 ```
+We can do some query to tha database:
+
 ## 2. TRANSACTIONAL QUERY
-Searching for cars released >= 2015
+__2.1. Searching for cars released >= 2015__
 ```sql
 SELECT product_id, brand, model, year, price FROM car_product
 WHERE year >= 2015
 ```
 `Output`:
 ![image](https://user-images.githubusercontent.com/54851225/232662442-48acbe9f-b65a-45d3-b247-0b1a1d55d717.png)
+
+__2.2. To find cars manufactured in 2015 and later__
+```sql
+SELECT product_id, buyer_id, bid_date, bid_price, bid_status
+FROM bid
+WHERE product_id = 78
+```
+`output`:
+![image](https://user-images.githubusercontent.com/54851225/232662713-2a6802d6-5fa2-440b-b478-32c2fd1fa718.png)
+
+__2.3. Show all cars being sold by one account from newest to oldest__
+```sql
+SELECT product_id, brand, model, year, price, date_post
+FROM car_product
+WHERE seller_id = 100
+ORDER BY date_post DESC
+```
+`output`:
+![image](https://user-images.githubusercontent.com/54851225/232662905-0cd23be4-3af9-4f72-84e9-42c3db6b4f34.png)
+
+__2.4. Show the cheapest used car based on a keyword__
+```sql
+SELECT product_id, brand, model, year, price
+FROM car_product
+WHERE model LIKE '%Yaris%'
+ORDER BY price ASC
+LIMIT 5
+```
+`output`:
+![image](https://user-images.githubusercontent.com/54851225/232663034-12d73885-d4ac-4ac0-9f18-05f43bd582f5.png)
+
+__2.5. Show the closest used car based on a city ID, the closest distance is calculated based on latitude and longitude__
+To find the closest car with city ID 3173:
+
+```sql
+SELECT 
+ product_id, brand, model, year, price,
+ nama_kota, 
+ (SQRT(POWER(latitude - latitude_a, 2) + POWER(longitude - longitude_a, 2))) AS jarak 
+FROM
+ car_product
+INNER JOIN
+ city 
+ON
+ car_product.kota_id = city.kota_id,
+ (SELECT latitude AS latitude_a, longitude AS longitude_a FROM city WHERE kota_id = 3173) AS a
+ORDER BY
+ jarak
+ ```
+ `output`:
+ ![image](https://user-images.githubusercontent.com/54851225/232663379-722fd9f5-47c0-4033-ba12-57e1e674e99c.png)
