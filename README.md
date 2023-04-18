@@ -1,4 +1,4 @@
-# A SIMPLE ERD FOR USED CAR SITE
+# A SIMPLE ERD FOR USED CAR WEBSITE
 
 This is a relational database creation project for the website 'CarBekas.com', a used car buying and selling platform in Indonesia.
 
