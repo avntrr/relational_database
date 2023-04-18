@@ -21,5 +21,36 @@ This table will be used as information on the city location of the car, seller, 
 df_city = pd.read_csv('.../city - city.csv', delimiter=',')
 df_city
 ```
+#### B.3. Table car_product
+Data is retrieved from the CSV file.
+```python
+df_car_product = pd.read_csv('.../car_product - car_product.csv', delimiter=',')
+```
+Add dummy data:
+```python
+# list of cars
+brands = df_car_product['brand'].unique().tolist()
 
+# random 200 data
+rows = []
+for i in range(450):
+    # select random brand
+    random_brand = random.choice(brands)
+    
+    # select random model
+    random_model = df_car_product[df_car_product['brand']==random_brand]['model'].sample(n=1).iloc[0]
+    
+    # random year 2021-2022
+    random_year = random.randint(2010, 2022)
+    
+    # random price between 80juta dan 450juta
+    random_price = random.randint(80000000, 450000000)
+    
+    # select body type
+    random_body_type = df_car_product[df_car_product['model']==random_model]['body_type'].sample(n=1).iloc[0]
+
+    new_data = {'product_id':max(df_car_product['product_id'])+1, 'brand':random_brand, 'model':random_model, 'body_type':random_body_type, 'year':random_year, 'price':random_price}
+
+    df_car_product = df_car_product.append(new_data, ignore_index=True)
+    ```
 
