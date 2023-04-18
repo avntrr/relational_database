@@ -190,3 +190,5 @@ Searching for cars released >= 2015
 SELECT product_id, brand, model, year, price FROM car_product
 WHERE year >= 2015
 ```
+`Output`:
+![image](https://user-images.githubusercontent.com/54851225/232662442-48acbe9f-b65a-45d3-b247-0b1a1d55d717.png)
