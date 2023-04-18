@@ -8,7 +8,8 @@ Ini adalah project pembuatan relational database untuk website 'CarBekas.com', s
 
 Tabel dan data dummy dibuat menggunakan python kemudian insert ke postgreSQL. Langkah-langkah yang dilakukan adalah sebagai berikut:
 #1. Import Library
-``` import pandas as pd
+```python
+import pandas as pd
 import numpy as np
 import random
 from faker import Faker
