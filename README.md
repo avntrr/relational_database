@@ -27,7 +27,7 @@ Data is retrieved from the CSV file.
 ```python
 df_car_product = pd.read_csv('.../car_product - car_product.csv', delimiter=',')
 ```
-Add dummy data:
+`Add dummy data`:
 ```python
 # list of cars
 brands = df_car_product['brand'].unique().tolist()
@@ -104,7 +104,7 @@ df_seller['date_created'] = [d.date() for d in date_post]
 # Menampilkan data frame buyer
 df_seller.head(10)
 ```
-add *'seller_id'* to *df_car_product*
+`add *'seller_id'* to *df_car_product*`
 ```python
 # add 'seller_id' to df_car_product randomly
 df_car_product['seller_id'] = [random.choice(df_seller['seller_id']) for i in range(len(df_car_product))]
@@ -166,7 +166,7 @@ for i in range(n_bid):
     # Tambahkan data bid ke dalam dataframe
     df_bid.loc[i] = [bid_id, buyer_id, product_id, bid_date, bid_price, bid_status]
 ```
-Reindex the table:
+`Reindex the table`:
 ```python
 df_bid = df_bid.reindex(columns=['bid_id', 'buyer_id', 'product_id', 'bid_date', 'bid_price', 'bid_status'])
 
@@ -225,7 +225,7 @@ LIMIT 5
 `output`:
 ![image](https://user-images.githubusercontent.com/54851225/232663034-12d73885-d4ac-4ac0-9f18-05f43bd582f5.png)
 
-__2.5. Show the closest used car based on a city ID, the closest distance is calculated based on latitude and longitude.__
+__2.5. Show the closest used car based on a city ID, the closest distance is calculated based on latitude and longitude.__<br>
 To find the closest car with city ID 3173:
 
 ```sql
