@@ -7,21 +7,22 @@ This is a relational database creation project for the website 'CarBekas.com', a
 <img width="1171" alt="Screenshot 2023-04-16 at 12 46 00" src="https://user-images.githubusercontent.com/54851225/232653374-5d19a45a-25be-4735-9246-6d069e51d963.png">
 
 Tables and dummy data are created using *python* and then inserted into *postgreSQL*. The steps performed are as follows:
-## A. IMPORT LIBRARY
+## 1. CREATE DATABASE
+### A. IMPORT LIBRARY
 ```python
 import pandas as pd
 import numpy as np
 import random
 from faker import Faker
 ```
-## B. CREATING TABLES
-### B.1. CITY TABLE
+### B. CREATE TABLES
+#### B.1. CITY TABLE
 This table will be used as information on the city location of the car, seller, and buyer. Data is retrieved from the CSV file that already contains the city ID, city name, and coordinates.
 ```python
 df_city = pd.read_csv('.../city - city.csv', delimiter=',')
 df_city
 ```
-### B.2. CAR_PRODUCT TABLE
+#### B.2. CAR_PRODUCT TABLE
 Data is retrieved from the CSV file.
 ```python
 df_car_product = pd.read_csv('.../car_product - car_product.csv', delimiter=',')
@@ -79,7 +80,7 @@ df_car_product['date_post'] = [d.date() for d in date_post]
 df_car_product['total_km'] = [random.randint(40000, 100000)for i in range(len(df_car_product))]
 df_car_product['kota_id'] = [random.choice(kota_id) for i in range(len(df_car_product))]
 ```
-### B.3. SELLER TABLE
+#### B.3. SELLER TABLE
 ```python
 df_seller = pd.DataFrame()
 
@@ -118,7 +119,7 @@ for index, row in df_car_product.iterrows():
 df_car_product.head(10)
 ```
 
-### B.4. BUYER TABLE
+#### B.4. BUYER TABLE
 ```python
 df_buyer = pd.DataFrame()
 
@@ -136,7 +137,7 @@ df_buyer['alamat'] = [random.choice(df_city['nama_kota']) for i in range(len(df_
 # Menampilkan data frame buyer
 df_buyer.head(10)
 ```
-### B.5. BID TABLE
+#### B.5. BID TABLE
 ```python
 from datetime import date, timedelta
 
@@ -171,7 +172,7 @@ df_bid = df_bid.reindex(columns=['bid_id', 'buyer_id', 'product_id', 'bid_date',
 
 df_bid.head(10)
 ```
-## C. INSERT TO POSTGRESQL
+### C. INSERT TO POSTGRESQL
 ```python
 from sqlalchemy import create_engine
 
@@ -182,4 +183,10 @@ df_city.to_sql('city', engine, if_exists='replace', index=False)
 df_buyer.to_sql('buyer', engine, if_exists='replace', index=False)
 df_seller.to_sql('seller', engine, if_exists='replace', index=False)
 df_bid.to_sql('bid', engine, if_exists='replace', index=False)
+```
+## 2. TRANSACTIONAL QUERY
+Searching for cars released >= 2015
+```sql
+SELECT product_id, brand, model, year, price FROM car_product
+WHERE year >= 2015
 ```
