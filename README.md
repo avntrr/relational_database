@@ -27,7 +27,7 @@ Data is retrieved from the CSV file.
 ```python
 df_car_product = pd.read_csv('.../car_product - car_product.csv', delimiter=',')
 ```
-`Add dummy data`:
+Add dummy data:
 ```python
 # list of cars
 brands = df_car_product['brand'].unique().tolist()
@@ -104,7 +104,7 @@ df_seller['date_created'] = [d.date() for d in date_post]
 # Menampilkan data frame buyer
 df_seller.head(10)
 ```
-`add *'seller_id'* to *df_car_product*`
+add *'seller_id'* to *df_car_product*
 ```python
 # add 'seller_id' to df_car_product randomly
 df_car_product['seller_id'] = [random.choice(df_seller['seller_id']) for i in range(len(df_car_product))]
