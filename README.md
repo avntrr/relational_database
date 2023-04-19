@@ -229,19 +229,12 @@ __2.5. Show the closest used car based on a city ID, the closest distance is cal
 To find the closest car with city ID 3173:
 
 ```sql
-SELECT 
- product_id, brand, model, year, price,
- nama_kota, 
- (SQRT(POWER(latitude - latitude_a, 2) + POWER(longitude - longitude_a, 2))) AS jarak 
-FROM
- car_product
-INNER JOIN
- city 
-ON
- car_product.kota_id = city.kota_id,
- (SELECT latitude AS latitude_a, longitude AS longitude_a FROM city WHERE kota_id = 3173) AS a
-ORDER BY
- jarak
+SELECT product_id, brand, model, year, price, nama_kota, 
+       (SQRT(POWER(latitude - latitude_a, 2) + POWER(longitude - longitude_a, 2))) AS jarak 
+FROM car_product 
+INNER JOIN city ON car_product.kota_id = city.kota_id 
+CROSS JOIN (SELECT latitude AS latitude_a, longitude AS longitude_a FROM city WHERE kota_id = 3173) AS a 
+ORDER BY jarak
  ```
  `output`:
  ![image](https://user-images.githubusercontent.com/54851225/232663379-722fd9f5-47c0-4033-ba12-57e1e674e99c.png)
