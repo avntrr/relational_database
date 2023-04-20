@@ -172,18 +172,8 @@ df_bid = df_bid.reindex(columns=['bid_id', 'buyer_id', 'product_id', 'bid_date',
 
 df_bid.head(10)
 ```
-### C. INSERT TO POSTGRESQL
-```python
-from sqlalchemy import create_engine
-
-engine = create_engine('postgresql://postgres:12310101@localhost:5432/avntrr')
-
-df_car_product.to_sql('car_product', engine, if_exists='replace', index=False)
-df_city.to_sql('city', engine, if_exists='replace', index=False)
-df_buyer.to_sql('buyer', engine, if_exists='replace', index=False)
-df_seller.to_sql('seller', engine, if_exists='replace', index=False)
-df_bid.to_sql('bid', engine, if_exists='replace', index=False)
-```
+### C. IMPORT TO CSV
+Export all tables to .csv then import to postgreSQL database tables respectively.
 We can do some query to tha database:
 
 ## 2. TRANSACTIONAL QUERY
