@@ -4,7 +4,8 @@ This is a relational database creation project for the website 'CarBekas.com', a
 
 **Here is the Entity Relationship Diagram (ERD) for the 'CarBekas.com' website.**
 
-<img width="1171" alt="Screenshot 2023-04-16 at 12 46 00" src="![image](https://user-images.githubusercontent.com/54851225/233230678-4e37fbab-bed3-4439-97f1-21115ff08f50.png)">
+![image](https://user-images.githubusercontent.com/54851225/233230770-de114f35-2eba-49ee-b4bd-014de2d68542.png)
+
 
 You can easily download full script in [database folder](https://github.com/avntrr/relational_database_ilham-x8rh/blob/main/Database/sql_project.ipynb). Tables and dummy data are created using *python* and then inserted into *postgreSQL*. The steps performed are as follows:
 ## 1. CREATE DATABASE
