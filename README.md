@@ -173,8 +173,7 @@ df_bid = df_bid.reindex(columns=['bid_id', 'buyer_id', 'product_id', 'bid_date',
 df_bid.head(10)
 ```
 ### C. IMPORT TO CSV
-Export all tables to .csv then import to postgreSQL database tables respectively.
-We can do some query to tha database:
+Export all tables to .csv then import to postgreSQL database tables respectively. After that, you can do several queries to view the data relationships.
 
 ## 2. TRANSACTIONAL QUERY
 __2.1. Searching for cars released >= 2015..__
