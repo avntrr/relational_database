@@ -6,7 +6,6 @@ This is a relational database creation project for the website 'CarBekas.com', a
 
 ![image](https://user-images.githubusercontent.com/54851225/233230770-de114f35-2eba-49ee-b4bd-014de2d68542.png)
 
-
 You can easily download full script in [database folder](https://github.com/avntrr/relational_database_ilham-x8rh/blob/main/Database/sql_project.ipynb). Tables and dummy data are created using *python* and then inserted into *postgreSQL*. The steps performed are as follows:
 ## 1. CREATE DATABASE
 ### A. IMPORT LIBRARY
